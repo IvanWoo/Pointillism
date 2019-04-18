@@ -1,1 +1,7 @@
+.vscode
+
 .python-version
+__pycache__
+
+/outputs
+/inputs
