@@ -10,10 +10,11 @@ parser.add_argument('--stroke-scale', default=0, type=int, help="Scale of the br
 parser.add_argument('--gradient-smoothing-radius', default=0, type=int, help="Radius of the smooth filter applied to the gradient (0 = automatic)")
 parser.add_argument('--limit-image-size', default=0, type=int, help="Limit the image size (0 = no limits)")
 parser.add_argument('img_path', nargs='?', default="images/lake.jpg")
+parser.add_argument('uuid', nargs='?', default="42")
 
 args = parser.parse_args()
 
-res_path = args.img_path.rsplit(".", -1)[0] + "_drawing.jpg"
+res_path = f"outputs/output_{args.uuid}.png"
 img = cv2.imread(args.img_path)
 
 if args.limit_image_size > 0:
@@ -41,8 +42,8 @@ print("Extending color palette...")
 palette = palette.extend([(0, 50, 0), (15, 30, 0), (-15, 30, 0)])
 
 # display the color palette
-cv2.imshow("palette", palette.to_image())
-cv2.waitKey(200)
+# cv2.imshow("palette", palette.to_image())
+# cv2.waitKey(200)
 
 print("Computing gradient...")
 gradient = VectorField.from_gradient(gray)
@@ -74,6 +75,6 @@ for h in bar(range(0, len(grid), batch_size)):
         cv2.ellipse(res, (x, y), (length, stroke_scale), angle, 0, 360, color, -1, cv2.LINE_AA)
 
 
-cv2.imshow("res", limit_size(res, 1080))
+# cv2.imshow("res", limit_size(res, 1080))
 cv2.imwrite(res_path, res)
-cv2.waitKey(0)
+# cv2.waitKey(0)
